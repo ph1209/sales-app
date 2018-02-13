@@ -28,12 +28,12 @@ function clientesController($scope, $http, $routeParams, $location) {
       $http.get($scope.server("/customer/"+$routeParams.id))
         .success(function(data){
           $scope.row = data;
-          $scope.row.isUpdtae = true;
+          $scope.row.isUpdate = true;
         });
       }else {
         $scope.row = {};
         $scope.CustomerID = null;
-        $scope.row.isUpdtae = false;
+        $scope.row.isUpdate = false;
       }
   }
 

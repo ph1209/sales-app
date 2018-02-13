@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $app->get("/customers",function (){
 
@@ -41,7 +41,7 @@ $app->post("/customer/:id",function ($id){
 			$data->Phone
 			)
 		);
-		
+
 	}
 
 	formatJson($data);
@@ -54,6 +54,3 @@ $app->delete("/customer/:id",function ($id){
 		$stmt->execute(array($id));
 	formatJson(true);
 });
-
-
-
