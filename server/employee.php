@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 $app->get("/employees",function (){
 
-	$sql = "SELECT EmployeeID,FirstName,LastName,HomePhone FROM employees";
+	$sql = "SELECT EmployeeID,Name,Phone,Salary FROM employees";
 	$stmt = DB::prepare($sql);
 	$stmt->execute();
 	formatJson($stmt->fetchAll());
@@ -11,37 +11,33 @@ $app->get("/employees",function (){
 $app->get("/employee/:id",function ($id){
 
 	//DATE_FORMAT( `date` , '%d/%c/%Y %H:%i:%s' ) AS `date`
-	$sql = "SELECT EmployeeID,FirstName,LastName,HomePhone,DATE_FORMAT(BirthDate,'%d/%c/%Y') as BirthDate FROM employees WHERE EmployeeID=?";
+	$sql = "SELECT EmployeeID,Name,Phone,Salary FROM employees WHERE EmployeeID=?";
 	$stmt = DB::prepare($sql);
 	$stmt->execute(array($id));
 	formatJson($stmt->fetch());
 });
 
-$app->post("/employee/",function (){
+$app->post("/employee/:id",function (){
 
 	$data =json_decode(\Slim\Slim::getInstance()->request()->getBody());
 
 	if ($data->EmployeeID!=0){
-		$sql = "UPDATE employees SET FirstName=?,LastName=?,HomePhone=?,BirthDate=? WHERE EmployeeID=?";
+		$sql = "UPDATE employees SET Name=?,Phone=?,Salary=? WHERE EmployeeID=?";
 		$stmt = DB::prepare($sql);
 		$stmt->execute(array(
-			$data->FirstName,
-			$data->LastName,
-			$data->HomePhone,
-			DB::dateToMySql($data->BirthDate),
+			$data->Name,
+			$data->Phone,
+			$data->Salary,
 			$data->EmployeeID
 			)
 		);
-	}
-	else
-	{
-		$sql = "INSERT INTO employees (FirstName,LastName,HomePhone,BirthDate)  VALUES (?,?,?,?)";
+	}else{
+		$sql = "INSERT INTO employees (EmployeeID,Name,Phone,Salary)  VALUES (?,?,?,?)";
 		$stmt = DB::prepare($sql);
 		$stmt->execute(array(
-			$data->FirstName,
-			$data->LastName,
-			$data->HomePhone,
-			DB::dateToMySql($data->BirthDate)
+			$data->Name,
+			$data->Phone,
+			$data->Salary
 			)
 		);
 		$data->EmployeeID = DB::lastInsertId();
@@ -51,13 +47,8 @@ $app->post("/employee/",function (){
 });
 
 $app->delete("/employee/:id",function ($id){
-	$sql = "DELETE FROM customers WHERE CustomerID=?";
+	$sql = "DELETE FROM employees WHERE EmployeeID=?";
 		$stmt = DB::prepare($sql);
 		$stmt->execute(array($id));
 	formatJson(true);
 });
-
-
-
-
-

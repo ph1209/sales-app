@@ -11,6 +11,7 @@ $app.config(['$routeProvider', '$httpProvider' ,function($routeProvider, $httpPr
    when('/clientes', {templateUrl:"view/clientes/main.html", controller:'clientesController'}).
    when('/clientes/new', {templateUrl:"view/clientes/update.html", controller:'clientesController'}).
    when('/clientes/:id', {templateUrl:"view/clientes/update.html", controller:'clientesController'}).
+   when('/funcionarios', {templateUrl:"view/funcionarios/main.html", controller:"funcionariosController"}).
    otherwise({redirectTo:'/'});
 
   // Configurando o response receptor, para exibir mensagem de erro que o servidor retorne

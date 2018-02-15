@@ -13,7 +13,7 @@ function clientesController($scope, $http, $routeParams, $location) {
     return Math.ceil($scope.rows.lenght/$scope.pageSize);
   }
 
-  // Método que acessa o banco de dados
+  // SELECIONAR TODOS OS REGISTROS
   $scope.loadAll = function(){
     $scope.showLoader();
     $http.get($scope.server("/customers"))
@@ -22,6 +22,7 @@ function clientesController($scope, $http, $routeParams, $location) {
       });
   }
 
+  // SELECIONAR UM REGISTRO
   $scope.loadRow = function(){
     if($routeParams.id!=null){
       $scope.showLoader();
